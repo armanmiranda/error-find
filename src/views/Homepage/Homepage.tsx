@@ -15,8 +15,8 @@ const Homepage = () => {
       <ActivitiesContainer>
         {apiData?.activities.map((item) => {
           return (
-            <StyledLink to={`questions/${item.order}`}>
-              <Activity key={item.order}>
+            <StyledLink to={`questions/${item.order}`} key={item.order}>
+              <Activity>
                 {item.activity_name}
               </Activity>
             </StyledLink>
