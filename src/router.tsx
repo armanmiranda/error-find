@@ -1,7 +1,7 @@
-import { createBrowserRouter} from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import { App } from "views/RootView"
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/',
     element: <App />,
