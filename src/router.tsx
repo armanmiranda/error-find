@@ -1,4 +1,5 @@
 import { createHashRouter } from 'react-router-dom';
+import { Question, QuestionLoader } from 'views/Question';
 import { App } from "views/RootView"
 
 export const router = createHashRouter([
@@ -7,7 +8,8 @@ export const router = createHashRouter([
     element: <App />,
   },
   {
-    path: 'questions/:questionId',
-    element: <h2> Hello world </h2>
+    path: 'activities/:activity_id',
+    element: <Question />,
+    loader: QuestionLoader
   }
 ]);
