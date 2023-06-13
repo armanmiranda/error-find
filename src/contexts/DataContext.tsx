@@ -13,11 +13,11 @@ interface TBasicActivity {
   questions: TQuestion[];
 }
 
-interface TActivity extends TBasicActivity {
+export interface TActivity extends TBasicActivity {
   activity_name: string;
 }
 
-interface TQuestion {
+export interface TQuestion {
   is_correct: boolean;
   stimulus: string;
   order: number;
@@ -30,3 +30,18 @@ export interface TQuestionWithRound extends TBasicActivity {
 }
 
 export const DataContext = createContext<TPayloadData>(undefined);
+
+export const findActivity = (apiData: TPayloadData, activityId: string) => {
+  return apiData?.activities.find((activity) => {
+    return activity.order.toString() === activityId;
+  });
+}
+
+export const findQuestion = (
+  activityData: TActivity | TQuestionWithRound,
+  questionId: string
+) => {
+  return activityData.questions.find(question => {
+    return question.order.toString() === questionId;
+  });
+}

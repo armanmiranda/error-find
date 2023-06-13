@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const QuestionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #c3cfde;
+  background-color: #fdfdfd;
   min-width: 375px;
   max-width: 500px;
   height: 350px;
@@ -28,6 +28,7 @@ export const QuestionHeaderContainer = styled.div`
 `;
 
 export const QuestionBodyContainer = styled.div`
+  white-space: break-spaces;
   display: flex;
   align-items: center;
   padding: 10px 30px;
@@ -38,7 +39,7 @@ export const QuestionBodyContainer = styled.div`
   border-bottom: 1px solid blue;
 `;
 
-export const QuestionActions = styled.div`
+export const QuestionActionsContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 30px 0;

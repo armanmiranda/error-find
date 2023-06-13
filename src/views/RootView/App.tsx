@@ -5,6 +5,8 @@ import Spinner from 'components/styled-components/spinner';
 import { apiCall } from 'utils/api';
 import { DataContext, TPayloadData } from 'contexts/DataContext';
 import { mockData } from 'mockApi';
+import { RouterProvider } from 'react-router-dom';
+import { router } from 'router';
 
 // TODO:  remove later for testing purposes only
 // const payloadApiUrl = "https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json";
@@ -24,12 +26,10 @@ function App() {
     });
   }, []);
 
-  if (apiData && Object.keys(apiData).length > 0) {
+  if (apiData) {
     return (
       <DataContext.Provider value={apiData}>
-        <Container>
-          <Homepage />
-        </Container>
+        <RouterProvider router={router} />
       </DataContext.Provider>
     );
   } else {
