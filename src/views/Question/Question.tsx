@@ -1,23 +1,50 @@
 import { ActivityLabel, QuestionBodyContainer, QuestionContainer, QuestionHeaderContainer } from "components/styled-components/question-styles";
-import { DataContext, TActivity, TQuestion, findActivity, findQuestion } from "contexts/DataContext";
+import { DataContext, TActivity, TQuestion, findActivity, findQuestion, TQuestionWithRound } from "contexts/DataContext";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { ROUTES } from "routing";
 import QuestionActions from "./QuestionActions";
 
 const Question = () => {
   const apiData = useContext(DataContext);
-  const { activity_id, question_id } = useParams();
+  const navigate = useNavigate();
+  const { activity_id, round_id, question_id } = useParams();
 
   const [questionData, setQuestionData] = useState<TQuestion | undefined>(undefined);
-  const [activityData, setActivityData] = useState<TActivity | undefined>(undefined);
+  const [activityData, setActivityData] = useState<TActivity<unknown> | undefined>(undefined);
+  const [roundData, setRoundData] = useState<TQuestionWithRound | undefined>(undefined);
 
 
   useEffect(() => {
-    if (activity_id && question_id && apiData) {
+    if (activity_id) {
       const activity = findActivity(apiData, activity_id);
-      if (activity) {
-        setActivityData(activity);
-        setQuestionData(findQuestion(activity, question_id));
+      setActivityData(activity);
+
+      if (question_id && apiData) {
+        if (activity) {
+          const typedActivity = activity as TActivity<TQuestion>;
+          setQuestionData(findQuestion<TQuestion>(typedActivity, question_id));
+        }
+      }
+
+      if (round_id && apiData) {
+        if (activity) {
+          const typedActivity = activity as TActivity<TQuestionWithRound>;
+          const round = findQuestion<TQuestionWithRound>(typedActivity, round_id);
+          setRoundData(round);
+          if (question_id && round) {
+            setQuestionData(findQuestion<TQuestion>(round, question_id))
+          } else {
+            setTimeout(() => {
+              const redirectionRoute = ROUTES.routeToActivityRoundQuestionWith({
+                activity_id: activity_id,
+                round_id: round_id,
+                question_id: round.questions[0].order.toString()
+              })
+              navigate(redirectionRoute);
+            }, 2000);
+          }
+        }
       }
     }
   }, [apiData, question_id])
@@ -36,6 +63,17 @@ const Question = () => {
     )
   }
 
+  if (roundData && !question_id) {
+    return (
+      <QuestionContainer>
+        <QuestionHeaderContainer>
+          <ActivityLabel>{activityData?.activity_name}</ActivityLabel>
+          <h1>{roundData.round_title}</h1>
+        </QuestionHeaderContainer>
+      </QuestionContainer>
+    );
+  }
+
   return (
     <QuestionContainer>
       <QuestionHeaderContainer>
@@ -48,7 +86,10 @@ const Question = () => {
         </span>
       </QuestionBodyContainer>
       {(activityData && question_id) &&
-        <QuestionActions activityData={activityData} questionId={question_id} />
+        <QuestionActions
+          activityData={activityData as TActivity<TQuestion>}
+          questionId={question_id}
+          roundData={roundData} />
       }
     </QuestionContainer>
   )

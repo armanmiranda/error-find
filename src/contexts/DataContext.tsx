@@ -5,15 +5,15 @@ export type TPayloadData = TApiData | undefined;
 interface TApiData {
   name: string;
   heading: string;
-  activities: TActivity[];
+  activities: TActivity<unknown>[];
 }
 
-interface TBasicActivity {
+interface TBasicActivity<T> {
   order: number;
-  questions: TQuestion[];
+  questions: T[];
 }
 
-export interface TActivity extends TBasicActivity {
+export interface TActivity<T> extends TBasicActivity<T> {
   activity_name: string;
 }
 
@@ -25,7 +25,7 @@ export interface TQuestion {
   feedback: string;
 }
 
-export interface TQuestionWithRound extends TBasicActivity {
+export interface TQuestionWithRound extends TBasicActivity<TQuestion> {
   round_title: string;
 }
 
@@ -37,11 +37,11 @@ export const findActivity = (apiData: TPayloadData, activityId: string) => {
   });
 }
 
-export const findQuestion = (
-  activityData: TActivity | TQuestionWithRound,
+export const findQuestion = <T,>(
+  activity: TBasicActivity<T & { order: number }>,
   questionId: string
 ) => {
-  return activityData.questions.find(question => {
+  return activity.questions.find(question => {
     return question.order.toString() === questionId;
-  });
+  }) as T;
 }

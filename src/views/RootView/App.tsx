@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Homepage } from '../Homepage';
 import { Container } from 'components/styled-components';
 import Spinner from 'components/styled-components/spinner';
 import { apiCall } from 'utils/api';
 import { DataContext, TPayloadData } from 'contexts/DataContext';
 import { mockData } from 'mockApi';
 import { RouterProvider } from 'react-router-dom';
-import { router } from 'router';
+import { router } from 'routing';
 
 // TODO:  remove later for testing purposes only
 // const payloadApiUrl = "https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json";
