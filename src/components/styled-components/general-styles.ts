@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
-  background-color: #c3cfde;
+  background-color: #fdfdfd;
   min-width: 375px;
   max-width: 450px;
   height: 100%;

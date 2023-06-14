@@ -5,19 +5,19 @@ export type TPayloadData = TApiData | undefined;
 interface TApiData {
   name: string;
   heading: string;
-  activities: TActivity[];
+  activities: TActivity<unknown>[];
 }
 
-interface TBasicActivity {
+interface TBasicActivity<T> {
   order: number;
-  questions: TQuestion[];
+  questions: T[];
 }
 
-interface TActivity extends TBasicActivity {
+export interface TActivity<T> extends TBasicActivity<T> {
   activity_name: string;
 }
 
-interface TQuestion {
+export interface TQuestion {
   is_correct: boolean;
   stimulus: string;
   order: number;
@@ -25,8 +25,23 @@ interface TQuestion {
   feedback: string;
 }
 
-export interface TQuestionWithRound extends TBasicActivity {
+export interface TQuestionWithRound extends TBasicActivity<TQuestion> {
   round_title: string;
 }
 
 export const DataContext = createContext<TPayloadData>(undefined);
+
+export const findActivity = (apiData: TPayloadData, activityId: string) => {
+  return apiData?.activities.find((activity) => {
+    return activity.order.toString() === activityId;
+  });
+}
+
+export const findQuestion = <T,>(
+  activity: TBasicActivity<T & { order: number }>,
+  questionId: string
+) => {
+  return activity.questions.find(question => {
+    return question.order.toString() === questionId;
+  }) as T;
+}
