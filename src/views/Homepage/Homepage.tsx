@@ -1,9 +1,14 @@
-import { Header } from "components/styled-components";
 import { StyledLink } from "components/styled-components/general-styles";
-import { ActivitiesContainer, Activity } from "components/styled-components/homepage-styles";
-import { DataContext, findActivity, TActivity, TQuestion, TQuestionWithRound } from "contexts/DataContext";
+import {
+  DataContext,
+  TActivity,
+  TQuestion,
+  TQuestionWithRound
+} from "contexts/DataContext";
+import { FullHeightScreen } from "layouts/FullHeightScreen";
 import { useContext } from "react";
 import { ROUTES } from "routing";
+import { HomepageBodyItems } from "./styles";
 
 const Homepage = () => {
   const apiData = useContext(DataContext)
@@ -25,24 +30,20 @@ const Homepage = () => {
   }
 
   return (
-    <>
-      <Header>
-        <h1>{apiData?.name}</h1>
-      </Header>
-      <ActivitiesContainer>
-        {apiData?.activities.map((item) => {
-          return (
-            <StyledLink
-              to={generateUrl(item)}
-              key={item.order}>
-              <Activity>
-                {item.activity_name}
-              </Activity>
-            </StyledLink>
-          )
-        })}
-      </ActivitiesContainer>
-    </>
+    <FullHeightScreen headerProps={{ title: apiData?.name }}>
+      {apiData?.activities.map((item) => {
+        return (
+          <StyledLink
+            to={generateUrl(item)}
+            key={item.order}>
+            <HomepageBodyItems
+              isLastElement={item.order === apiData.activities.length}>
+              {item.activity_name}
+            </HomepageBodyItems>
+          </StyledLink>
+        )
+      })}
+    </FullHeightScreen>
   );
 }
 

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Container } from 'components/styled-components';
 import Spinner from 'components/styled-components/spinner';
 import { apiCall } from 'utils/api';
 import { DataContext, TPayloadData } from 'contexts/DataContext';
 import { mockData } from 'mockApi';
 import { RouterProvider } from 'react-router-dom';
 import { router } from 'routing';
+import { FullHeightContainer } from 'layouts/FullHeightScreen';
 
 // TODO:  remove later for testing purposes only
 // const payloadApiUrl = "https://s3.eu-west-2.amazonaws.com/interview.mock.data/payload.json";
@@ -33,9 +33,9 @@ function App() {
     );
   } else {
     return (
-      <Container>
+      <FullHeightContainer>
         <Spinner />
-      </Container>
+      </FullHeightContainer>
     );
   }
 }

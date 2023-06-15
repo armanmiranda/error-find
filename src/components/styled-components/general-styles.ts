@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const Container = styled.div`
-  background-color: #fdfdfd;
-  min-width: 375px;
-  max-width: 450px;
-  height: 100%;
-  margin: auto;
-  padding: 50px 0 150px;
-`;
-
 export const Header = styled.div`
   width: 100%;
   text-align: center;
@@ -17,4 +8,14 @@ export const Header = styled.div`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
+`
+
+export const Text = styled.span<{
+  fontSize?: string;
+  fontWeight?: string;
+  textTransform?: string;
+}>`
+  font-size: ${({fontSize}) =>  fontSize ? fontSize : '16px'};
+  font-weight: ${({fontWeight}) => fontWeight ? fontWeight : '400'};
+  text-transform: ${({textTransform}) => textTransform ? textTransform : 'unset'};
 `
