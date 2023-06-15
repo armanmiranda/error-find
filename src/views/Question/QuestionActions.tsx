@@ -50,7 +50,7 @@ const QuestionActions = ({
           round_id: nextRoundId.toString(),
         });
       } else {
-        return `/results`;
+        return `/results/${activityId}`;
       }
     }
   }

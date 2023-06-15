@@ -1,1 +1,1 @@
-export { Container, Header } from './general-styles';
+export { Header } from './general-styles';
