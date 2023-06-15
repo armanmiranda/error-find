@@ -36,11 +36,6 @@ export const Title = styled.h1`
   margin-bottom: 50px;
 `;
 
-export const Text= styled.p`
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 600;
-`
 export const BodyItems = styled.div<{
   isLastElement?: boolean;
 }>`

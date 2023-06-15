@@ -9,3 +9,13 @@ export const Header = styled.div`
 export const StyledLink = styled(Link)`
   text-decoration: none;
 `
+
+export const Text = styled.span<{
+  fontSize?: string;
+  fontWeight?: string;
+  textTransform?: string;
+}>`
+  font-size: ${({fontSize}) =>  fontSize ? fontSize : '16px'};
+  font-weight: ${({fontWeight}) => fontWeight ? fontWeight : '400'};
+  text-transform: ${({textTransform}) => textTransform ? textTransform : 'unset'};
+`

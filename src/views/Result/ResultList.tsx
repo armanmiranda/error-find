@@ -1,3 +1,4 @@
+import { Text } from "components/styled-components/general-styles";
 import { TQuestion, TQuestionWithRound } from "contexts/DataContext";
 import { HomepageBodyItems } from "views/Homepage/styles";
 import ResultItem from "./ResultItem";
@@ -21,7 +22,9 @@ const ResultList = ({
           return (
             <>
               <HomepageBodyItems>
-                Test
+                <Text fontWeight='600' textTransform='uppercase'>
+                  {roundQuestion.round_title}
+                </Text>
               </HomepageBodyItems>
               {typedQuestions?.map((question, index) => {
                 return (
